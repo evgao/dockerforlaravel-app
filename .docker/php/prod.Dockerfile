@@ -31,7 +31,10 @@ RUN apt-get update \
     unzip \
   && docker-php-ext-install pcntl opcache zip pdo pdo_mysql \
   && pecl install -o -f redis-5.1.1 \
-  && docker-php-ext-enable redis
+  && docker-php-ext-enable redis \
+  && apt-get clean \
+  && apt-get autoremove -y \
+  && rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Use the default production configuration
 RUN mv $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
